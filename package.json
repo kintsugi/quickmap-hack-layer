@@ -1,0 +1,21 @@
+{
+  "name": "command-and-control",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.0.1",
+    "body-parser": "^1.15.2",
+    "command-line-args": "^3.0.1",
+    "express": "^4.14.0",
+    "moment": "^2.14.1",
+    "momentjs": "^1.1.15",
+    "mysql": "^2.11.1",
+    "request": "^2.74.0",
+    "sequelize": "^3.24.1",
+    "socket.io": "^1.4.8",
+    "winston": "^2.2.0"
+  }
+}
