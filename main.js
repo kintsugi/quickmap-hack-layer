@@ -69,6 +69,7 @@ function dockerStart() {
       async.eachSeries(commandStrings, (commandString, next) => {
         
         setTimeout(() => {
+          console.log(commandString);
           exec(commandString, (error, stdout, stderr) => {
             if (error) {
               console.error(`exec error: ${error}`);
