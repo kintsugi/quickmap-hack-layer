@@ -66,7 +66,7 @@ function dockerStart() {
       for(let point of points) {
         commandStrings.push(commandStringBase + formatCommand(point.get({plain: true})))
       }
-      async.each(commandStrings, (commandString, next) => {
+      async.eachSeries(commandStrings, (commandString, next) => {
         
         setTimeout(() => {
           exec(commandString, (error, stdout, stderr) => {
