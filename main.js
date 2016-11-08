@@ -5,6 +5,7 @@ const commandLineArgs = require('command-line-args');
 const config = require('./config');
 var Command = require('./Command');
 const exec = require('child_process').exec;
+var async = require('async');
 
 const optionDefinitions = [
   { name: 'port', alias: 'p', type: Number},
@@ -13,6 +14,7 @@ const optionDefinitions = [
   { name: 'db_user', type: String},
   { name: 'db_pass', type: String},
   { name: 'accountsPerPoint', type: Number},
+  { name: 'count', alias: 'n', type: Number},
 ];
 
 const options = commandLineArgs(optionDefinitions);
@@ -22,6 +24,7 @@ config.db_port = options.db_port || config.db_port;
 config.db_user = options.db_user || config.db_user;
 config.db_pass = options.db_pass || config.db_pass;
 config.accountsPerPoint = options.accountsPerPoint || config.accountsPerPoint;
+config.count = options.count || null;
 
 logger.info('Starting app...');
 
@@ -54,7 +57,8 @@ function dockerStart() {
     include: {
       model: Models.Accounts,
       where: {banned: false},
-    }
+    },
+    limit: config.count,
   })
     .then((points) => {
       let commandStrings = []
@@ -63,10 +67,17 @@ function dockerStart() {
         commandStrings.push(commandStringBase + formatCommand(point.get({plain: true})))
       }
       async.each(commandStrings, (commandString, next) => {
-        exec(commandString)
+        exec(commandString, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`exec error: ${error}`);
+            return;
+          }
+          console.log(`stdout: ${stdout}`);
+          console.log(`stderr: ${stderr}`);
+        })
         setTimeout(() => {
           next()
-        }, 5000)
+        }, 10000)
       })
       
     })
