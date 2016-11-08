@@ -58,13 +58,17 @@ function dockerStart() {
   })
     .then((points) => {
       let commandStrings = []
-      let commandStringBase = `docker run -d frostthefox/pokemongo-map -k AIzaSyBkRnvh3NmZPFZ0EkZ8znkOmTxjBGMiYnQ -st 5 -ns -ng -nk --db-type=mysql --db-name=pokemon_map --db-user=${config.db_user} --db-pass=${config.db_pass} --db-host=${config.db_host} --db-port=${config.db_port}`
+      let commandStringBase = `docker run -d quickmap-hack-map -k AIzaSyBkRnvh3NmZPFZ0EkZ8znkOmTxjBGMiYnQ -st 5 -ns -ng -nk --db-type=mysql --db-name=pokemon_map --db-user=${config.db_user} --db-pass=${config.db_pass} --db-host=${config.db_host} --db-port=${config.db_port}`
       for(let point of points) {
         commandStrings.push(commandStringBase + formatCommand(point.get({plain: true})))
       }
-      for(let commandString of commandStrings) {
-        exec(commandString);
-      }
+      async.each(commandStrings, (commandString, next) => {
+        exec(commandString)
+        setTimeout(() => {
+          next()
+        }, 5000)
+      })
+      
     })
     .catch((err) => {
       console.log(err)

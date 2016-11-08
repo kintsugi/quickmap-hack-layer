@@ -6,7 +6,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "async": "^2.0.1",
+    "async": "^2.1.2",
     "body-parser": "^1.15.2",
     "command-line-args": "^3.0.1",
     "express": "^4.14.0",
