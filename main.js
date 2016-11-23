@@ -62,7 +62,8 @@ function dockerStart() {
   })
     .then((points) => {
       let commandStrings = []
-      let commandStringBase = `docker run -d quickmap-hack-map -k AIzaSyBkRnvh3NmZPFZ0EkZ8znkOmTxjBGMiYnQ -st 5 -ns -ng -nk --db-type=mysql --db-name=pokemon_map --db-user=${config.db_user} --db-pass=${config.db_pass} --db-host=${config.db_host} --db-port=${config.db_port}`
+      let commandStringBase = `docker run -d quickmap-hack-map -k AIzaSyBkRnvh3NmZPFZ0EkZ8znkOmTxjBGMiYnQ -st 5 -ns -ng -nk 
+-cs -ck "6ee7e7e23a32887bb65bb054dee46e4c" -cds "6LeeTScTAAAAADqvhqVMhPpr_vB9D364Ia-1dSgK" --db-type=mysql --db-name=pokemon_map --db-user=${config.db_user} --db-pass=${config.db_pass} --db-host=${config.db_host} --db-port=${config.db_port}`
       for(let point of points) {
         commandStrings.push(commandStringBase + formatCommand(point.get({plain: true})))
       }
